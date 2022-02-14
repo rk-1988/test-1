@@ -1,0 +1,46 @@
+name: samosa_workflow
+on: [push]
+jobs:
+  upload1:
+    name: uploading office files to server
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          echo "Samosa is very tasty" > 1.txt
+          echo "samosa is not health" > 2.txt
+          hostname > 3.txt
+          date > 4.txt
+          sudo apt update -y
+      - name: upload file from marketplace actions
+        uses: actions/upload-artifact@v1
+        with:
+          name: hello-world
+          path: 1.txt 
+      - name: upload file from marketplace actions1
+        uses: actions/upload-artifact@v1 
+        with:
+          name: hello-world
+          path: 2.txt 
+          
+  download1:
+    name: downloading files
+    needs: upload1
+    runs-on: windows-latest
+    steps:
+      - name: Download files 
+        uses: actions/download-artifact@v1
+        with:
+          name: hello-world
+          path: test1
+      - name: Download files 
+        uses: actions/download-artifact@v1
+        with:
+          name: hello-world
+          path: test1   
+      - shell: bash
+        run: |
+          v1=`cat test1/1.txt`
+          v2=`cat test1/2.txt`
+          echo $v1
+          echo $v2
