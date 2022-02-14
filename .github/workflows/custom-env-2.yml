@@ -1,0 +1,25 @@
+name: step-level-custom-environment-variables
+
+on: [push]
+
+jobs:
+    sample-job-1:
+        runs-on: ubuntu-latest
+        steps:
+            - name: step-1
+              env:
+                  dish: samosa is Available for this specific job only
+                  # Here the environment variable is declared in step level
+
+              run: echo "${dish}"
+              # This will echo the value/string of dish
+
+            - name: step-2
+              run: echo "${dish}"
+              # This will NOT echo the value/string of dish
+
+    sample-job-2:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "${dish}"
+            # This will NOT echo the value/string of dish
